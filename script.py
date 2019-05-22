@@ -22,6 +22,14 @@ def first_pass( commands ):
 
     name = ''
     num_frames = 1
+	varied = False
+	
+	
+	for c in commands:
+		if c is 'num_frames':
+		if c is 'basename':
+		if c is 'vary':
+			
 
     return (name, num_frames)
 
