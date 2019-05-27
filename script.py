@@ -19,17 +19,33 @@ from draw import *
   with the name being used.
   ==================== """
 def first_pass( commands ):
-
+	
     name = ''
     num_frames = 1
 	varied = False
 	
+	anim? = False
+	basename? = False
+	frames? = False
 	
-	for c in commands:
-		if c is 'num_frames':
-		if c is 'basename':
-		if c is 'vary':
+	for command in commands:
+		op = command['op']
+		args = command['args']
+		
+		if op == 'frames':
+			frames? = True
+			num_frames = args[0]
+			anim? = True
+		
+		elif op == 'basename':
+			anim? = True
+			basename? = True
+			name = args[0]
 			
+		elif op == 'vary':
+			anim? = True
+			if args[0]>num_frames-1 or args[0]<0 or args[1]>num_frames-1 or args[1]<0:
+				print 'Vary is out of bounds'
 
     return (name, num_frames)
 
@@ -52,6 +68,7 @@ def first_pass( commands ):
   ===================="""
 def second_pass( commands, num_frames ):
     frames = [ {} for i in range(num_frames) ]
+	
 
     return frames
 
