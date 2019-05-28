@@ -54,10 +54,9 @@ def second_pass( commands, num_frames ):
     
     for command in commands:
         op = command['op']
-        args = command['args']
-        
         if op == 'vary':
             knob = command['knob']
+            args = command['args']
             k1 = args[0]
             k2 = args[1]
             v1 = args[2]
@@ -112,10 +111,6 @@ def run(filename):
     tmp = new_matrix()
     ident( tmp )
 
-    #stack = [ [x[:] for x in tmp] ]
-    #screen = new_screen()
-    #zbuffer = new_zbuffer()
-    #tmp = []
     step_3d = 100
     consts = ''
     coords = []
@@ -171,21 +166,21 @@ def run(filename):
             elif c == 'move':
                 if command['knob'] is not None:
                     knob_value = frames[i][command['knob']]
-                tmp = make_translate(args[0], args[1], args[2])
+                tmp = make_translate(args[0]*knob_value, args[1]*knob_value, args[2]*knob_value)
                 matrix_mult(stack[-1], tmp)
                 stack[-1] = [x[:] for x in tmp]
                 tmp = []
             elif c == 'scale':
                 if command['knob'] is not None:
                     knob_value = frames[i][command['knob']]
-                tmp = make_scale(args[0], args[1], args[2])
+                tmp = make_scale(args[0]*knob_value, args[1]*knob_value, args[2]*knob_value)
                 matrix_mult(stack[-1], tmp)
                 stack[-1] = [x[:] for x in tmp]
                 tmp = []
             elif c == 'rotate':
                 if command['knob'] is not None:
                     knob_value = frames[i][command['knob']]
-                theta = args[1] * (math.pi/180)
+                theta = args[1] * (math.pi/180) *knob_value
                 if args[0] == 'x':
                     tmp = make_rotX(theta)
                 elif args[0] == 'y':
